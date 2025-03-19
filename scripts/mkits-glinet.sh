@@ -77,8 +77,8 @@ fi
 if [ -n "${SCRIPT}" ]; then
 SCRIPT_NODE="
 		script {
-			description = \"Flashing nand 800 20000\";
-			data = /incbin/(\"flash.scr\");
+			description = \"GL.iNET UBOOT UPGRADE V2\";
+			data = /incbin/(\"$(basename ${SCRIPT})\");
 			type = \"script\";
 			arch = \"arm\";
 			os = \"linux\";
