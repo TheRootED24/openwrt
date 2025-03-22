@@ -11,7 +11,7 @@ define Device/glinet_gl-b3000
 	DEVICE_DTS_CONFIG := config@mp03.5-c1
 	SUPPORTED_DEVICES += b3000
 	IMAGES := factory.img
-	IMAGE/factory.img := append-ubi | gl-factory --with-uboot-scr | append-metadata
+	IMAGE/factory.img := append-ubi | gl-factory --with-uboot-scr | append-gl-metadata
 	DEVICE_PACKAGES := \
 		ath11k-firmware-qcn6122 \
 		ipq-wifi-glinet_gl-b3000 \
