@@ -1,21 +1,14 @@
-#
-# Copyright (C) 2021 OpenWrt.org
-#
-# This is free software, licensed under the GNU General Public License v2.
-# See /LICENSE for more information.
-#
-
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=mongoose
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_DATE:=2025-03-20
+PKG_SOURCE_DATE:=2025-03-22
 PKG_SOURCE_URL=https://github.com/TheRootED24/libmongoose.git
 
-PKG_SOURCE_VERSION:=9400e461a60b663a89ca2169a3ccd14a8c9777f2
-PKG_MIRROR_HASH:=04bf3623407b3089ca7321c74001c020d0443e622773476dca58ab62228dd296
+PKG_MIRROR_HASH:=d1505aeb869ab7b39118d4de346d1384b6e31eec4e60fd04ec1be9e68eb46d44
+PKG_SOURCE_VERSION:=49dfd34a52348e71a2844e93c0ee18c8dd10cf23
 
 PKG_MAINTAINER:=hostle <TheRootED24@gmail.com>
 PKG_LICENSE:=MIT License
@@ -28,11 +21,17 @@ include $(INCLUDE_DIR)/cmake.mk
 define Package/mongoose
   SECTION:=libs
   CATEGORY:=Libraries
-  TITLE:=OpenWrt Mongoose C Networking shared Library
-  DEPENDS:=+libopenssl
+  TITLE:=Mongoose C/C++ Networking Library
+  DEPENDS:=+libmbedtls
 endef
 
-TARGET_CFLAGS += -std=gnu99 -I$(STAGING_DIR)/usr/include/mongoose/
+define Package/mongoose/description
+  Mongoose is a network library for C/C++. It provides event-driven non-blocking APIs for TCP, UDP, HTTP,
+  WebSocket, MQTT, and other protocols. It is designed for connecting devices and bringing them online.
+  Mongoose makes embedded network programming fast, robust, and easy.
+endef
+
+TARGET_CFLAGS += -I$(STAGING_DIR)/usr/include/mongoose/
 
 define Build/InstallDev
 	$(INSTALL_DIR) $(1)/usr/include/mongoose
