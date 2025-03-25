@@ -69,6 +69,10 @@ define Package/uboot-envtools/conffiles
 	/etc/fw_sys.config
 endef
 
+define Package/uboot-envtools/prepare
+	$(CP) ./uboot-envtools/patches ./patches
+endef
+
 define Build/Configure
 	$(call Build/Compile/Default,tools-only_defconfig)
 	$(call Build/Compile/Default,syncconfig)
@@ -77,7 +81,7 @@ define Build/Configure
 endef
 
 MAKE_FLAGS += \
-	ARCH="sandbox" \
+	ARCH="sandbox" cross_tools \
 	TARGET_CFLAGS="$(TARGET_CFLAGS)" \
 	TARGET_LDFLAGS="$(TARGET_LDFLAGS)" \
 	NO_PYTHON=1
