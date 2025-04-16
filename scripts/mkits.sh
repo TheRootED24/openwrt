@@ -238,3 +238,4 @@ ${ROOTFS_NODE}
 
 # Write .its file to disk
 echo "$DATA" > "${OUTPUT}"
+

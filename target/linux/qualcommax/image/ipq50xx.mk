@@ -1,3 +1,5 @@
+DEVICE_VARS += BOOT_SCRIPT
+
 define Device/glinet_gl-b3000
 	$(call Device/FitImage)
 	$(call Device/UbiFit)
@@ -10,13 +12,13 @@ define Device/glinet_gl-b3000
 	NAND_SIZE := 128
 	DEVICE_DTS_CONFIG := config@mp03.5-c1
 	SUPPORTED_DEVICES += b3000
-	IMAGES := factory.img
+	BOOT_SCRIPT:= glinet_gl-b3000.bootscript
+	IMAGES := factory.img sysupgrade.bin
 	IMAGE/factory.img := append-ubi | gl-factory --with-uboot-scr | append-gl-metadata
 	DEVICE_PACKAGES := \
 		ath11k-firmware-qcn6122 \
 		ipq-wifi-glinet_gl-b3000 \
-		dumpimage \
-		glinet-uboot-scr
+		dumpimage 
 endef
 TARGET_DEVICES += glinet_gl-b3000
 
@@ -32,13 +34,13 @@ define Device/glinet_gl-x2000
 	NAND_SIZE := 128
 	DEVICE_DTS_CONFIG := config@mp03.5-c1
 	SUPPORTED_DEVICES += x2000
-	IMAGES := factory.img
+	BOOT_SCRIPT:= glinet_gl-x2000.bootscript
+	IMAGES := factory.img sysupgrade.bin
 	IMAGE/factory.img := append-ubi | gl-factory --with-uboot-scr | append-metadata
 	DEVICE_PACKAGES := \
 		ath11k-firmware-qcn6122 \
 		ipq-wifi-glinet_gl-x2000 \
-		dumpimage \
-		glinet-uboot-scr
+		dumpimage
 endef
 TARGET_DEVICES += glinet_gl-x2000
 

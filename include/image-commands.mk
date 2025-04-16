@@ -534,20 +534,29 @@ endef
 
 define Build/gl-factory
 	$(eval GL_NAME := $(subst $(comma),_,$(word 1,$(SUPPORTED_DEVICES))))
-	$(eval GL_INCLUDE := $(STAGING_DIR)/usr/include/glinet-uboot-scr)
-	$(eval GL_SCRIPT := $(GL_INCLUDE)/$(GL_NAME).scr)
 	$(eval GL_IMGK := $(KDIR_TMP)/$(DEVICE_IMG_PREFIX)-squashfs-factory.img)
 	$(eval GL_ITS := $(KDIR_TMP)/$(GL_NAME).its)
-	$(if $(wildcard $(GL_INCLUDE)/*),$(CP) $(GL_INCLUDE)/* $(KDIR_TMP)/) \
+	$(eval GL_UBI := "ubi")
+	$(if $(wildcard $(BOOT_SCRIPT)),$(CP) $(BOOT_SCRIPT) $(KDIR_TMP)/)
 
-	$(TOPDIR)/scripts/mkits-glinet.sh \
-		$(if $(and $(wildcard $(GL_SCRIPT)),$(findstring --with-uboot-scr,$(word 1,$(1)))),-s $(GL_SCRIPT)) \
-		-f $(GL_IMGK) \
-		-o $(GL_ITS) \
+	$(TOPDIR)/scripts/mkits-qsdk-ipq-image.sh \
+		$(GL_ITS) \
+		$(GL_UBI) \
+		$(GL_IMGK) \
+		$(if $(and $(wildcard $(BOOT_SCRIPT)),\
+		$(findstring --with-uboot-scr,$(word 1,$(1)))),\
+		$(BOOT_SCRIPT))
 
+
+	$(CP) $(GL_IMGK) $(GL_IMGK).tmp
 	PATH=$(LINUX_DIR)/scripts/dtc:$(PATH) mkimage -f \
 		$(GL_ITS) \
 		$(GL_IMGK)
+
+	$(RM) \
+		$(GL_ITS) \
+		$(GL_IMGK).tmp \
+		$(KDIR_TMP)/$(notdir $(BOOT_SCRIPT))
 endef
 
 define Build/linksys-image
