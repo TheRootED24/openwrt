@@ -15,7 +15,8 @@ case "$FIRMWARE" in
 		ath11k_patch_mac $wlan_mac 0
 		ath11k_set_macflag
 		;;
-	glinet,gl-b3000)
+	glinet,gl-b3000|\
+	glinet,gl-x2000)
 		caldata_extract "0:art" 0x1000 0x20000
 		ath11k_patch_mac $(macaddr_add $(get_mac_label_dt) 3) 0
 		ath11k_set_macflag
@@ -40,7 +41,8 @@ case "$FIRMWARE" in
 		ath11k_patch_mac $wlan_mac 0
 		ath11k_set_macflag
 		;;
-	glinet,gl-b3000)
+	glinet,gl-b3000|\
+	glinet,gl-x2000)
 		caldata_extract "0:art" 0x26800 0x20000
 		ath11k_patch_mac $(macaddr_add $(get_mac_label_dt) 4) 0
 		ath11k_set_macflag

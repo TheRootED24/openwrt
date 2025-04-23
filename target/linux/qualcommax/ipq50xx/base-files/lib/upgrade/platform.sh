@@ -84,7 +84,8 @@ platform_do_upgrade() {
 		remove_oem_ubi_volume wifi_fw
 		nand_do_upgrade "$1"
 		;;
-	glinet,gl-b3000)
+	glinet,gl-b3000|\
+	glinet,gl-x2000)
 		glinet_do_upgrade "$1"
 		;;
 	linksys,mr5500|\
